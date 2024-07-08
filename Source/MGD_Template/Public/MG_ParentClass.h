@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "MG_WizardClass.generated.h"
+#include "MG_ParentClass.generated.h"
 
 UCLASS()
-class MGD_TEMPLATE_API AMG_WizardClass : public ACharacter
+class MGD_TEMPLATE_API AMG_ParentClass : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AMG_WizardClass();
+	AMG_ParentClass();
 
 	//Moves character based on Axis
 	UFUNCTION(BlueprintCallable, Category="Movement")
@@ -23,7 +23,11 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Movement")
 	FVector2D pMoveAxis;
 
-
+public:
+	//Replicated pitch incase i need it
+	//UPROPERTY(BlueprintReadOnly, Category="Pitch")
+	//float pRepPtch;
+	
 
 
 
