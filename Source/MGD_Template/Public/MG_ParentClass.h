@@ -23,6 +23,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Movement")
 	FVector2D pMoveAxis;
 
+
 public:
 	//Replicated pitch incase i need it
 	//UPROPERTY(BlueprintReadOnly, Category="Pitch")
