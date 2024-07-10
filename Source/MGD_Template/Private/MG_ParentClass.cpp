@@ -21,7 +21,7 @@ void AMG_ParentClass::Pure_MoveCharacter(const FVector2D Axis)
 	AddMovementInput(GetControlRotation().Vector(), Axis.Y);
 	
 	// Move character based on X axis
-	AddMovementInput(FRotationMatrix(GetControlRotation()).GetScaledAxis(EAxis::Y), Axis.X); 
+	AddMovementInput(FRotationMatrix(GetControlRotation()).GetScaledAxis(EAxis::Y), -Axis.X); 
 }
 
 
