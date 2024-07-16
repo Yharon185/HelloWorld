@@ -29,7 +29,8 @@ public:
 	//UPROPERTY(BlueprintReadOnly, Category="Pitch")
 	//float pRepPtch;
 	
-
+FRotator defaultMeshRotation;
+	virtual void BeginPlay() override;
 
 
 

@@ -17,11 +17,37 @@ void AMG_ParentClass::Pure_MoveCharacter(const FVector2D Axis)
 	// update axis 
 	pMoveAxis = Axis;
 	
-	// Move character based on Y Axis (Might be needed Later)
-	AddMovementInput(GetControlRotation().Vector(), Axis.Y);
+	FRotator direction = defaultMeshRotation;
+	
+	
+	if(-Axis.Y > 0.0f)
+	{
+		direction.Yaw = 90.0f;
+	}
+	else if(-Axis.Y < 0.0f)
+	{
+		direction.Yaw = -90.0f;
+	}
+
+	GetMesh()->SetRelativeRotation(direction);
+	
+
+
+
 	
 	// Move character based on X axis
-	AddMovementInput(FRotationMatrix(GetControlRotation()).GetScaledAxis(EAxis::Y), -Axis.X);
+	//AddMovementInput(FRotationMatrix(GetControlRotation()).GetScaledAxis(EAxis::Y), -Axis.X);
+
+	// Move character based on Y Axis (Might be needed Later)
+	AddMovementInput(GetControlRotation().Vector(), Axis.Y);
+
+	
+}
+
+void AMG_ParentClass::BeginPlay()
+{
+	Super::BeginPlay();
+	defaultMeshRotation = GetMesh()->GetRelativeRotation();
 }
 
 
