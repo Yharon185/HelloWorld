@@ -32,7 +32,10 @@ public:
 FRotator defaultMeshRotation;
 	virtual void BeginPlay() override;
 
+	UPROPERTY(BlueprintReadOnly, Category="Mesh Rotation")
+FRotator currentMeshRotation;
 
+	virtual void Tick(float DeltaSeconds) override;
 
 	
 };

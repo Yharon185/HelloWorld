@@ -3,6 +3,8 @@
 
 #include "MG_ParentClass.h"
 
+#include "Kismet/KismetMathLibrary.h"
+
 // Sets default values
 AMG_ParentClass::AMG_ParentClass()
 {
@@ -17,21 +19,8 @@ void AMG_ParentClass::Pure_MoveCharacter(const FVector2D Axis)
 	// update axis 
 	pMoveAxis = Axis;
 	
-	FRotator direction = defaultMeshRotation;
 	
 	
-	if(-Axis.Y > 0.0f)
-	{
-		direction.Yaw = 90.0f;
-	}
-	else if(-Axis.Y < 0.0f)
-	{
-		direction.Yaw = -90.0f;
-	}
-
-	GetMesh()->SetRelativeRotation(direction);
-	
-
 
 
 	
@@ -48,6 +37,31 @@ void AMG_ParentClass::BeginPlay()
 {
 	Super::BeginPlay();
 	defaultMeshRotation = GetMesh()->GetRelativeRotation();
+}
+
+void AMG_ParentClass::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	float direction = UKismetMathLibrary::Quat_UnrotateVector(GetActorRotation().Quaternion(), GetVelocity()).X;
+	
+	currentMeshRotation = defaultMeshRotation;
+	
+	
+	if(direction > 0.0f)
+	{
+		currentMeshRotation.Yaw = -90.0f;
+	}
+	else if(direction < 0.0f)
+	{
+		currentMeshRotation.Yaw = 90.0f;
+	}
+
+	
+	if(GetMesh()->IsSimulatingPhysics() == false)
+	{
+		GetMesh()->SetRelativeRotation(currentMeshRotation);
+	}
 }
 
 
