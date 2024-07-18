@@ -20,10 +20,14 @@ public:
 	void Pure_MoveCharacter(const FVector2D Axis);
 
 	//Move axis of Character
-	UPROPERTY(BlueprintReadOnly, Category="Movement")
+	UPROPERTY(BlueprintReadOnly, Replicated, Category="Movement")
 	FVector2D pMoveAxis;
 
+virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	UFUNCTION(Server, Reliable, Category="Movement")
+	void updateMoveAxis(FVector2D Axis);
+	
 public:
 	//Replicated pitch incase i need it
 	//UPROPERTY(BlueprintReadOnly, Category="Pitch")
@@ -37,5 +41,9 @@ FRotator currentMeshRotation;
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	UPROPERTY(BlueprintReadWrite, Category="Attacking")
+bool pAttacking;
+
+	
 	
 };

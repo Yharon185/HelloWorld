@@ -4,6 +4,7 @@
 #include "MG_ParentClass.h"
 
 #include "Kismet/KismetMathLibrary.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 AMG_ParentClass::AMG_ParentClass()
@@ -19,7 +20,10 @@ void AMG_ParentClass::Pure_MoveCharacter(const FVector2D Axis)
 	// update axis 
 	pMoveAxis = Axis;
 	
-	
+	if(HasAuthority() == false)
+	{
+		updateMoveAxis(Axis);
+	}
 	
 
 
@@ -33,6 +37,17 @@ void AMG_ParentClass::Pure_MoveCharacter(const FVector2D Axis)
 	
 }
 
+void AMG_ParentClass::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(AMG_ParentClass, pMoveAxis);
+}
+
+void AMG_ParentClass::updateMoveAxis_Implementation(FVector2D Axis)
+{
+	pMoveAxis = Axis;
+}
+
 void AMG_ParentClass::BeginPlay()
 {
 	Super::BeginPlay();
@@ -43,9 +58,8 @@ void AMG_ParentClass::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	float direction = UKismetMathLibrary::Quat_UnrotateVector(GetActorRotation().Quaternion(), GetVelocity()).X;
+	float direction = pMoveAxis.Y;
 	
-	currentMeshRotation = defaultMeshRotation;
 	
 	
 	if(direction > 0.0f)
@@ -55,6 +69,10 @@ void AMG_ParentClass::Tick(float DeltaSeconds)
 	else if(direction < 0.0f)
 	{
 		currentMeshRotation.Yaw = 90.0f;
+	}
+	else
+	{
+		currentMeshRotation = defaultMeshRotation;
 	}
 
 	

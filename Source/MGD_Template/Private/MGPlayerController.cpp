@@ -14,5 +14,8 @@ void AMGPlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	Pure_OnRepPosess(InPawn);
+	if(HasAuthority())
+	{
+		Pure_OnRepPosess(InPawn);
+	}
 }
