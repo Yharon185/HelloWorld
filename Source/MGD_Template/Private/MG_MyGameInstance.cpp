@@ -4,6 +4,7 @@
 #include "MG_MyGameInstance.h"
 #include "OnlineSubsystem.h"
 #include "OnlineSubsystemUtils.h"
+#include "interfaces/OnlineSessionInterface.h"
 
 void UMG_MyGameInstance::Init()
 {
@@ -69,6 +70,21 @@ FString UMG_MyGameInstance::GetDisplayName() const
 	const IOnlineIdentityPtr identityRef = Online::GetSubsystem(GetWorld())->GetIdentityInterface();
 
 	return identityRef->GetPlayerNickname(0);
+}
+
+bool UMG_MyGameInstance::IsInSession() const
+{
+	if (!IsLoggedIn())
+		return false;
+
+	const IOnlineSessionPtr sessionRef = Online::GetSubsystem(GetWorld())->GetSessionInterface();
+
+	if (!sessionRef)
+		return false;
+
+	const EOnlineSessionState::Type state = sessionRef->GetSessionState(MGSESSION_NAME);
+
+	return state != EOnlineSessionState::NoSession;
 }
 
 void UMG_MyGameInstance::EOSLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId,

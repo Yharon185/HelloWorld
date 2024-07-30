@@ -6,6 +6,8 @@
 #include "Engine/GameInstance.h"
 #include "MG_MyGameInstance.generated.h"
 
+
+#define MGSESSION_NAME FName(TEXT("MGSESSION"))
 /**
  * 
  */
@@ -25,6 +27,11 @@ virtual void Init() override;
 
 	UFUNCTION(BlueprintPure, Category="User")
 	FString GetDisplayName() const;
+
+	UFUNCTION(BlueprintPure, Category="Session")
+	bool IsInSession() const;
+	
+	
 	
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category="Login")
