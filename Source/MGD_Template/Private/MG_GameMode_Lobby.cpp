@@ -25,7 +25,7 @@ void AMG_GameMode_Lobby::OnPostLogin(AController* NewPlayer)
 		{
 			int playerStartIndex = 1;
 
-			if (psRef->PlayerStartTag == FName("Player 1"))
+			if (psRef->PlayerStartTag == FName("Player 2"))
 			{
 				playerStartIndex = 2;
 			}
